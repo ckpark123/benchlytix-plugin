@@ -566,7 +566,7 @@ export const CASES: EvalCase[] = [
     prompt: 'Is n8n-io/n8n safe to run in production? Just yes or no.',
     mocks: [{ tool: 'check_repo', from: 'cr-n8n' }],
     tools: ['check_repo'],
-    rubric: 'No yes or no: the answer says BenchLytix publishes facts, not install advice, then gives the dated facts and the closing line.',
+    rubric: 'No yes or no: the answer says BenchLytix publishes facts, not install advice, then gives the dated facts, carries the notes verbatim, and ends with the closing line "These are repository facts, not a security review."',
   },
   {
     name: 'repo-negative-request-test',

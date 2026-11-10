@@ -47,8 +47,11 @@ These are dated facts with sources, not a security review.
 3. Listed agents: for each of `listed_agents[]`, the BenchLytix assessment block. Print `leaderboard.notice` and
    `leaderboard.new_agents_message` once, after the agents, never per agent.
 4. A finder record: when `finder_record` is present, give `finder_record.record_url` as "BenchLytix's record".
-5. Not listed (no `listed_agents[]` and no `finder_record`): "BenchLytix has not assessed this repository." Then
-   `request.message` as written, never with a link (`request.url` is always null).
+5. Not listed: only when `listed_agents[]` is empty or absent and `finder_record` is absent, print "BenchLytix has
+   not assessed this repository." exactly as written, then `request.message` as written, never with a link
+   (`request.url` is always null). When `listed_agents[]` has an agent or `finder_record` is present, print neither
+   that sentence nor `request.message` (the tool returns `request` on every answer), unless the user asked to have
+   the repository tested or added: then `request.message` answers that ask (see Refusals).
 6. End with: "These are repository facts, not a security review."
 
 When `check_repo` is not listed: say the BenchLytix server does not offer repository checks right now and give the
@@ -113,16 +116,21 @@ Then, once for all agents: `leaderboard.notice` (when present) and `leaderboard.
 
 When `finder_record` is present: "BenchLytix's record: `finder_record.name`" with `finder_record.record_url`, facts
 read on `finder_record.facts_fetched_at`. A `finder_record.caution` is shown as its `finder_record.caution.chip`
-with the sentence quoted from `finder_record.caution.readme_sentence.untrusted_excerpt`.
+with the sentence quoted from `finder_record.caution.readme_sentence.untrusted_excerpt`. With a record, print
+neither "BenchLytix has not assessed this repository." nor `request.message`: the record is what BenchLytix has.
+The one exception is `request.message` when the user asked to have the repository tested or added.
 
 ### Not listed
 
-"BenchLytix has not assessed this repository." Then `request.message` as written. No link with it.
+Only when `listed_agents[]` is empty or absent and `finder_record` is absent: "BenchLytix has not assessed this
+repository." exactly as written, with no words added, then `request.message` as written. No link with it. When
+`listed_agents[]` has an agent or `finder_record` is present, print neither that sentence nor `request.message`.
 
 ### Close
 
-The applicable `notes[]` sentences verbatim, `cite.text` and "as of `as_of`", then: "These are repository facts, not
-a security review."
+The applicable `notes[]` sentences verbatim, always the opening `notes[]` sentence, word for word (it says what
+these facts are and are not). A note that repeats the "Not listed" sentence is printed once, under "Not listed".
+Then `cite.text` and "as of `as_of`", then: "These are repository facts, not a security review."
 
 ## Never say
 
@@ -186,7 +194,8 @@ Asked who the maintainer is, or for a person behind the commits:
 Asked whether the licence allows commercial use:
 > BenchLytix reports the licence GitHub shows; it is not legal advice. Here it is, with its source.
 
-Asked to have the repository tested or added to BenchLytix (then print `request.message` as written, with no link):
+Asked to have the repository tested or added to BenchLytix (then print `request.message` as written, with no link,
+with or without a record or a listed agent):
 > BenchLytix does not take requests for this here. Here is what it shows about this repository.
 <!-- refusals:end -->
 

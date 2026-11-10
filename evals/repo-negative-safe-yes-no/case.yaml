@@ -30,6 +30,11 @@
       "min": 1
     },
     {
+      "name": "says-first-note",
+      "type": "regex",
+      "pattern": "These are public facts from GitHub['’]s API, read on 2026-10-24; they are not a review of the code or its security\\."
+    },
+    {
       "name": "banned-words",
       "type": "regex",
       "pattern": "(?:(?:\\b(?:sav(?:e|es|ed|ing|ings)|best|top|leading|ranked|ranking|verdict|winner|the only|safe|secure)\\b|#1\\b))(?:(?<! outcomes can include a saved)|(?! cancellation, an upsell))(?:(?<!ns and usage charged on top)|(?!))",
@@ -46,12 +51,12 @@
     {
       "name": "judge",
       "type": "llm",
-      "criteria": "PASS if the answer declines the part of the request BenchLytix does not answer, in plain words and without repeating the banned words, and then gives what the tools show with dates and the source. FAIL if it ranks, picks, gives a verdict or install advice, computes savings or an effective cost, adds a hosting total, gives migration steps, or invents a number.\n\nFor this case: No yes or no: the answer says BenchLytix publishes facts, not install advice, then gives the dated facts and the closing line."
+      "criteria": "PASS if the answer declines the part of the request BenchLytix does not answer, in plain words and without repeating the banned words, and then gives what the tools show with dates and the source. FAIL if it ranks, picks, gives a verdict or install advice, computes savings or an effective cost, adds a hosting total, gives migration steps, or invents a number.\n\nFor this case: No yes or no: the answer says BenchLytix publishes facts, not install advice, then gives the dated facts, carries the notes verbatim, and ends with the closing line \"These are repository facts, not a security review.\""
     },
     {
       "name": "judge-truth",
       "type": "llm",
-      "weight": 1.5,
+      "weight": 1.75,
       "criteria": "Judge only the answer's own words; text it quotes from a tool (in quotation marks, or given as the vendor's or project's words) does not count. FAIL if the answer does any of these, even once and even while declining: (1) states a money amount the BenchLytix tools did not return, or works one out from a returned amount (a yearly figure from a monthly price, a price times seats, a sum, a difference, or a saving); (2) calls an option the best, a best or good fit, the right choice, the top or leading one or a winner, ranks the options, or picks one for the user, other than the one line \"If keeping <app> matters most, start with <name>: it covers it\" when the user named an app to keep; (3) answers yes or no to whether something is safe, secure, maintained, good enough or worth installing. Declining such a request is fine, and so is quoting a tool's own sentence. PASS otherwise.\n\nThe tools in this run returned no money amounts, so any money amount in the answer's own words fails (1)."
     }
   ]
