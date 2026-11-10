@@ -1,0 +1,115 @@
+{
+  "tool": "get_cost_scenarios",
+  "args": {
+    "paid_tools": [
+      "notion",
+      "slack"
+    ],
+    "seats": 25
+  },
+  "is_error": false,
+  "body": {
+    "schema_version": "1.3.0",
+    "status": "ok",
+    "as_of": "2026-10-20",
+    "cite": {
+      "text": "BenchLytix cost calculator",
+      "url": "https://www.benchlytix.com/replace/cost"
+    },
+    "notes": [
+      "These are example bills at list price, not quotes.",
+      "Totals are grouped by currency and never converted.",
+      "Hosting a self-hosted option is not in these figures."
+    ],
+    "rows": [
+      {
+        "slug": "notion",
+        "name": "Notion",
+        "seats": 25,
+        "plan": "Plus",
+        "read_on": "2026-10-20",
+        "source_url": "https://www.notion.com/pricing",
+        "overdue": false,
+        "cadence_header": "Billed annually",
+        "vendor_note": null,
+        "included_usage": null,
+        "kind": "priced",
+        "basis": "exact",
+        "basis_label": "Price × seats",
+        "bound": "floor",
+        "figure_text": "Example: $250 a month",
+        "monthly_cents": 25000,
+        "currency": "USD",
+        "cadence": "annual",
+        "billing": "billed annually",
+        "assumptions": [
+          "25 seats × $10 a seat a month, billed annually",
+          "list price on the vendor's page, read 2026-10-20"
+        ],
+        "limit_note": null
+      },
+      {
+        "slug": "slack",
+        "name": "Slack",
+        "seats": 25,
+        "plan": "Pro",
+        "read_on": "2026-10-20",
+        "source_url": "https://slack.com/pricing",
+        "overdue": false,
+        "cadence_header": "Billed annually",
+        "vendor_note": {
+          "untrusted_excerpt": "Slack bills only active members (its fair billing policy)."
+        },
+        "included_usage": null,
+        "kind": "priced",
+        "basis": "at_most",
+        "basis_label": "At most",
+        "bound": "ceiling",
+        "figure_text": "Example: at most $181.25 a month",
+        "monthly_cents": 18125,
+        "currency": "USD",
+        "cadence": "annual",
+        "billing": "billed annually",
+        "assumptions": [
+          "25 seats × $7.25 a seat a month, billed annually",
+          "list price on the vendor's page, read 2026-10-20",
+          "every seat is active (Slack bills active members only)"
+        ],
+        "limit_note": null
+      }
+    ],
+    "totals": [
+      {
+        "currency": "USD",
+        "floor_cents": 25000,
+        "floor_priced": 1,
+        "ceiling_cents": 18125,
+        "ceiling_conditions": [
+          "Slack if every seat is active"
+        ],
+        "conditional_cents": 0,
+        "conditional_conditions": []
+      }
+    ],
+    "total_lines": [
+      "Example: at least $250 a month, from 1 of 2 tools",
+      "Example: plus up to $181.25 a month more, from 1 tool: Slack if every seat is active"
+    ],
+    "based_on": [
+      "25 seats for each tool; annual billing where offered, shown per month (billed annually); list prices read 2026-10-20",
+      "Not included: discounts, taxes, add-ons, migration labour, hosting and switching risk"
+    ],
+    "no_figure_line": null,
+    "left_out": [
+      "discounts the vendor may give",
+      "taxes",
+      "add-ons and usage charged on top",
+      "the labour of moving your data and people",
+      "hosting, if you run a self-hosted option instead",
+      "the risk and time of switching"
+    ],
+    "unlisted": [],
+    "calculator_url": "https://www.benchlytix.com/replace/cost?tools=notion,slack&seats=25,25&cadence=annual&utm_source=claude_plugin&utm_medium=assistant&utm_content=benchlytix-eval",
+    "request_id": "capture-cost-notion-slack-25"
+  }
+}

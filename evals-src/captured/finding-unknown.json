@@ -1,0 +1,28 @@
+{
+  "tool": "get_finding",
+  "args": {
+    "finding": "999"
+  },
+  "is_error": true,
+  "body": {
+    "schema_version": "1.3.0",
+    "status": "error",
+    "as_of": null,
+    "cite": null,
+    "notes": [],
+    "request_id": "capture-finding-unknown",
+    "error": {
+      "code": "not_found",
+      "reason": "finding",
+      "message": "No published finding with that number or slug.",
+      "fix": "Use one of: 001, 002.",
+      "recovery": {
+        "action": "check_name",
+        "side_effects": "none",
+        "max_retries": 0
+      },
+      "docs_url": "https://www.benchlytix.com/docs/mcp#not_found",
+      "request_id": "capture-finding-unknown"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "benchlytix",
+  "description": "Dated, sourced answers from BenchLytix's published data: self-hosted replacements for paid SaaS tools, AI support vendor pricing, and public facts about GitHub-hosted MCP servers.",
+  "owner": {
+    "name": "BenchLytix"
+  },
+  "plugins": [
+    {
+      "name": "benchlytix",
+      "source": "./",
+      "description": "Dated, sourced answers from BenchLytix's published data: self-hosted replacements for paid SaaS tools, AI support vendor pricing, and public facts about GitHub-hosted MCP servers."
+    }
+  ]
+}

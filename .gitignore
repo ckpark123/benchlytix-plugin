@@ -1,0 +1,4 @@
+# Eval runs hold transcripts (report.html, aggregate-result.json): local only.
+# Only the dated summary evals/results/<date>.md is committed.
+evals/results/*/
+.DS_Store

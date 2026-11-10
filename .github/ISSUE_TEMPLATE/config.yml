@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: BenchLytix MCP server documentation
+    url: https://www.benchlytix.com/docs/mcp
+    about: How the server works, its tools and its limits.
+  - name: What the server logs
+    url: https://www.benchlytix.com/privacy#hosted-mcp
+    about: The analytics events and the fields they carry.

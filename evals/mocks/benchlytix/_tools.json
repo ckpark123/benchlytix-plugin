@@ -1,0 +1,2619 @@
+{
+  "tools": [
+    {
+      "name": "find_replacements",
+      "title": "Find self-hosted replacements",
+      "description": "Self-hosted, open-source options for a paid tool or a goal, each with its evidence label (tested, coverage checked, or listed untested), licence, maintenance facts, a rough hosting reference where known, and the paid tool's list price with its source and read date. Give paid_tool (for example 'zapier') or goal.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "paid_tool": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60,
+            "description": "The paid product you use, for example zapier or notion."
+          },
+          "goal": {
+            "type": "string",
+            "enum": [
+              "automation",
+              "team-wiki",
+              "spreadsheet-database",
+              "forms-surveys",
+              "scheduling",
+              "team-chat",
+              "crm",
+              "product-analytics",
+              "observability",
+              "e-signature",
+              "customer-messaging",
+              "llm-tracing",
+              "secrets",
+              "project-tracking",
+              "file-sync"
+            ],
+            "description": "What the tool is for, when no paid tool is named."
+          },
+          "setup": {
+            "type": "object",
+            "properties": {
+              "hosting": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "docker",
+                  "k8s"
+                ]
+              },
+              "osi_only": {
+                "type": "boolean"
+              },
+              "include_proprietary": {
+                "type": "boolean"
+              },
+              "must_keep_integrations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40
+                },
+                "maxItems": 10
+              }
+            },
+            "additionalProperties": false
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 25
+          },
+          "cursor": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 500
+          },
+          "include_claims": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "query": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true
+          },
+          "awaiting_review": {
+            "type": "number"
+          },
+          "not_published": {
+            "type": "number"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/properties/query"
+            }
+          },
+          "hidden": {
+            "type": "array",
+            "items": {
+              "$ref": "#/properties/query"
+            }
+          },
+          "paid_tool_prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/properties/query"
+            }
+          },
+          "paid_tool_coverage": {
+            "anyOf": [
+              {
+                "$ref": "#/properties/query"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "did_you_mean": {
+            "anyOf": [
+              {
+                "$ref": "#/properties/query"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "order_note": {
+            "type": "string"
+          },
+          "disclosure": {
+            "$ref": "#/properties/query"
+          },
+          "truncated": {
+            "type": "boolean"
+          },
+          "next_cursor": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "goal_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "Find self-hosted replacements",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "get_cost_scenarios",
+      "title": "List-price cost of paid tools",
+      "description": "The list-price monthly cost of up to five paid tools at a seat count, from each vendor's own pricing page, with how each figure was made, its read date, and the tools that have no figure and why. Every figure is an example at list price, not a quote: it leaves out discounts, taxes, add-ons, migration and hosting.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "paid_tools": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 60
+            },
+            "minItems": 1,
+            "maxItems": 5,
+            "description": "Paid tools by name or slug, for example [\"notion\", \"slack\"]."
+          },
+          "seats": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000,
+            "description": "Seats for every tool; default 10."
+          },
+          "seats_by_tool": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            "propertyNames": {
+              "maxLength": 60
+            }
+          },
+          "cadence": {
+            "type": "string",
+            "enum": [
+              "annual",
+              "monthly"
+            ],
+            "description": "Billing period; default annual, as on the calculator page."
+          }
+        },
+        "required": [
+          "paid_tools"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          },
+          "totals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/properties/rows/items"
+            }
+          },
+          "total_lines": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "based_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "no_figure_line": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "left_out": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unlisted": {
+            "type": "array",
+            "items": {
+              "$ref": "#/properties/rows/items"
+            }
+          },
+          "calculator_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "List-price cost of paid tools",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "get_finding",
+      "title": "Read a BenchLytix finding",
+      "description": "One published BenchLytix finding as structured data with its sources and read dates. 001: what five AI support vendors charge per resolution and how each defines a resolution, in the vendors' own words. 002: who makes the main-branch commits of the self-hosted alternatives BenchLytix lists.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "finding": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60,
+            "description": "A finding number or slug: 001 (001-ai-support-vendor-pricing), 002 (002-self-host-maintenance)."
+          }
+        },
+        "required": [
+          "finding"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "finding": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true
+          },
+          "payload": {
+            "$ref": "#/properties/finding"
+          },
+          "finding_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "Read a BenchLytix finding",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "get_agent_score",
+      "title": "Get an AI agent's score",
+      "description": "The score and its parts for one AI agent on the BenchLytix leaderboard, by slug, as its profile page shows it: the evidence basis (scores are desk assessments of the agent's published materials unless labelled otherwise), which dimensions hold a placeholder, the latest automated security scan colour and date where shown, and the leaderboard's current status.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{0,99}$",
+            "description": "The agent slug, as in its profile URL /agents/<slug>."
+          }
+        },
+        "required": [
+          "slug"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "agent": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true
+          },
+          "security": {
+            "anyOf": [
+              {
+                "$ref": "#/properties/agent"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "leaderboard": {
+            "$ref": "#/properties/agent"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "Get an AI agent's score",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "get_leaderboard",
+      "title": "List AI agents and scores",
+      "description": "AI agents on the BenchLytix leaderboard with their scores and evidence labels, optionally for one task category, in the leaderboard page's order, with the leaderboard's status. Scores are desk assessments of published materials unless labelled otherwise.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "legal-summarization",
+              "code-generation",
+              "data-extraction",
+              "customer-support",
+              "meeting-summarization",
+              "financial-analysis",
+              "web-research",
+              "content-generation",
+              "classification",
+              "multi-step-reasoning"
+            ],
+            "description": "A task category slug; see get_categories."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "agents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          },
+          "leaderboard": {
+            "$ref": "#/properties/agents/items"
+          },
+          "truncated": {
+            "type": "boolean"
+          },
+          "leaderboard_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "List AI agents and scores",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "compare_agents",
+      "title": "Compare AI agents side by side",
+      "description": "Two to five AI agents side by side, by slug, each with its score as its profile shows it, its evidence basis and which dimensions hold a placeholder. Side by side only: BenchLytix does not choose between them.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slugs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]{0,99}$"
+            },
+            "minItems": 2,
+            "maxItems": 5
+          }
+        },
+        "required": [
+          "slugs"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "agents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          },
+          "leaderboard": {
+            "$ref": "#/properties/agents/items"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "Compare AI agents side by side",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "verify_agent",
+      "title": "Check whether an agent is listed",
+      "description": "Whether an AI agent is listed and verified on BenchLytix, by slug or by the agent's runtime-platform id (not the BenchLytix id), with its score and evidence label when it is. Give exactly one of slug or agent_id.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{0,99}$"
+          },
+          "agent_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID the agent's runtime platform assigned it."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "slug": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "score": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "display_score": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "display_score_text": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "verified_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "badge_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "evidence_basis": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "evidence_label": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "Check whether an agent is listed",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "get_categories",
+      "title": "List task categories",
+      "description": "The task categories of the BenchLytix AI agent leaderboard, with a link to each category view. Use a slug as the category of get_leaderboard.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "slug": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "leaderboard_url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "slug",
+                "label",
+                "leaderboard_url"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "List task categories",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "get_methodology",
+      "title": "Read the scoring methodology summary",
+      "description": "How BenchLytix scores AI agents (four dimensions and their weights, the evidence labels) and how it labels self-hosted replacement options, with the methodology version, its revision and links to the full document.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "methodology_version": {
+            "type": "string"
+          },
+          "document_revision": {
+            "type": "string"
+          },
+          "dimensions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "dimension": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "weight": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "dimension",
+                "label",
+                "weight"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "evidence_labels": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "basis": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "basis",
+                "label"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "replacement_labels": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "meaning": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "label",
+                "meaning"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "methodology_url": {
+            "type": "string"
+          },
+          "replacement_finder_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "Read the scoring methodology summary",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "check_repo",
+      "title": "Check a GitHub repository",
+      "description": "Public facts about one GitHub repository, read from GitHub's API with their dates and sources: licence, archived state, last push, latest commit on the default branch, stars, contributors, latest release, who made the default branch's commits in the last 52 weeks, and README sentences that match a maintenance phrase list. If BenchLytix lists the repository, adds its desk-assessment score, evidence basis, scan colour and date, and the leaderboard's status. It does not judge the code.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "The repository as owner/repo, or its github.com URL (for example n8n-io/n8n or https://github.com/n8n-io/n8n)."
+          }
+        },
+        "required": [
+          "repo"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "schema_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "no_match",
+              "not_read",
+              "no_published_run",
+              "partial",
+              "error"
+            ]
+          },
+          "as_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cite": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              },
+              "recovery": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string"
+                  },
+                  "side_effects": {
+                    "type": "string",
+                    "const": "none"
+                  },
+                  "max_retries": {
+                    "type": "number"
+                  },
+                  "retry_after_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "action",
+                  "side_effects",
+                  "max_retries"
+                ],
+                "additionalProperties": false
+              },
+              "docs_url": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason",
+              "message",
+              "fix",
+              "recovery",
+              "docs_url",
+              "request_id"
+            ],
+            "additionalProperties": false
+          },
+          "repo": {
+            "type": "object",
+            "properties": {
+              "requested": {
+                "type": "string"
+              },
+              "full_name": {
+                "type": "string"
+              },
+              "html_url": {
+                "type": "string"
+              },
+              "renamed_from": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "requested",
+              "full_name",
+              "html_url",
+              "renamed_from"
+            ],
+            "additionalProperties": false
+          },
+          "licence": {
+            "type": "object",
+            "properties": {
+              "spdx": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "class": {
+                "type": "string",
+                "enum": [
+                  "osi",
+                  "open_core",
+                  "fair_code",
+                  "source_available",
+                  "proprietary",
+                  "unclassified"
+                ]
+              },
+              "plain": {
+                "type": "string"
+              },
+              "source_url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "spdx",
+              "class",
+              "plain",
+              "source_url"
+            ],
+            "additionalProperties": false
+          },
+          "archived": {
+            "type": "boolean"
+          },
+          "last_push_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "stars": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "default_branch": {
+            "anyOf": [
+              {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "untrusted_excerpt": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "untrusted_excerpt"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "contributors": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "type": "string",
+                "enum": [
+                  "ok",
+                  "none",
+                  "pending",
+                  "too_large",
+                  "rate_limited",
+                  "error"
+                ]
+              },
+              "error_reason": {
+                "type": "string",
+                "const": "deadline"
+              },
+              "count": {
+                "type": "number"
+              },
+              "includes_anonymous": {
+                "type": "boolean",
+                "const": true
+              },
+              "source_url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "outcome"
+            ],
+            "additionalProperties": false
+          },
+          "latest_release": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "$ref": "#/properties/contributors/properties/outcome"
+              },
+              "error_reason": {
+                "$ref": "#/properties/contributors/properties/error_reason"
+              },
+              "tag": {
+                "type": "string"
+              },
+              "published_at": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source_url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "outcome"
+            ],
+            "additionalProperties": false
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "untrusted_excerpt": {
+                    "type": "string"
+                  },
+                  "source_url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "untrusted_excerpt",
+                  "source_url"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "default_branch_commit": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "$ref": "#/properties/contributors/properties/outcome"
+              },
+              "error_reason": {
+                "$ref": "#/properties/contributors/properties/error_reason"
+              },
+              "committed_at": {
+                "type": "string"
+              },
+              "source_url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "outcome"
+            ],
+            "additionalProperties": false
+          },
+          "concentration": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "$ref": "#/properties/contributors/properties/outcome"
+              },
+              "error_reason": {
+                "$ref": "#/properties/contributors/properties/error_reason"
+              },
+              "window_weeks": {
+                "type": "number"
+              },
+              "human_commits": {
+                "type": "number"
+              },
+              "human_authors": {
+                "type": "number"
+              },
+              "top_share": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "bots_excluded": {
+                "type": "number"
+              },
+              "truncated": {
+                "type": "boolean"
+              },
+              "source_url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "outcome"
+            ],
+            "additionalProperties": false
+          },
+          "readme": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "$ref": "#/properties/contributors/properties/outcome"
+              },
+              "error_reason": {
+                "$ref": "#/properties/contributors/properties/error_reason"
+              },
+              "path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/properties/default_branch/anyOf/0/anyOf/1"
+                  }
+                ]
+              },
+              "source_url": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "matches": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "unmaintained",
+                        "not_for_production",
+                        "maintenance_mode"
+                      ]
+                    },
+                    "untrusted_excerpt": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "untrusted_excerpt"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 5
+              },
+              "matches_total": {
+                "type": "number"
+              },
+              "reviewed": {
+                "type": "boolean"
+              },
+              "review": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "anyOf": [
+                          {
+                            "$ref": "#/properties/readme/properties/matches/items/properties/kind"
+                          },
+                          {
+                            "type": "string",
+                            "const": "no_warning"
+                          }
+                        ]
+                      },
+                      "chip": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "quote_excerpt": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "reviewed_on": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "chip",
+                      "quote_excerpt",
+                      "reviewed_on"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "outcome",
+              "label",
+              "matches",
+              "matches_total",
+              "reviewed",
+              "review"
+            ],
+            "additionalProperties": false
+          },
+          "listed_agents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "agent": {
+                  "type": "object",
+                  "properties": {
+                    "slug": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "task_category": {
+                      "type": "string"
+                    },
+                    "listing_status": {
+                      "type": "string"
+                    },
+                    "display_score": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "display_score_text": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "week": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "evidence_basis": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "evidence_label": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "provenance": {
+                      "type": "string"
+                    },
+                    "parts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "dimension": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "weight": {
+                            "type": "number"
+                          },
+                          "value": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "measured": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "dimension",
+                          "label",
+                          "weight",
+                          "value",
+                          "measured"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "dimensions_defaulted": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "first_party": {
+                      "type": "boolean"
+                    },
+                    "first_party_disclosure": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "profile_url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "slug",
+                    "name",
+                    "task_category",
+                    "listing_status",
+                    "display_score",
+                    "display_score_text",
+                    "week",
+                    "evidence_basis",
+                    "evidence_label",
+                    "provenance",
+                    "parts",
+                    "dimensions_defaulted",
+                    "first_party",
+                    "first_party_disclosure",
+                    "profile_url"
+                  ],
+                  "additionalProperties": false
+                },
+                "security": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "color": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "label": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "scanned_at": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "color",
+                        "label",
+                        "scanned_at"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "agent",
+                "security"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 3
+          },
+          "leaderboard": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "frozen": {
+                    "type": "boolean"
+                  },
+                  "notice": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "new_agents_closed": {
+                    "type": "boolean"
+                  },
+                  "new_agents_message": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "frozen",
+                  "notice",
+                  "new_agents_closed",
+                  "new_agents_message",
+                  "status"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "finder_record": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "slug": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "record_url": {
+                    "type": "string"
+                  },
+                  "facts_fetched_at": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "caution": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "$ref": "#/properties/readme/properties/matches/items/properties/kind"
+                          },
+                          "chip": {
+                            "type": "string"
+                          },
+                          "readme_sentence": {
+                            "$ref": "#/properties/default_branch/anyOf/0/anyOf/1"
+                          },
+                          "source_url": {
+                            "type": "string"
+                          },
+                          "checked_at": {
+                            "type": "string"
+                          },
+                          "successor": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "chip",
+                          "readme_sentence",
+                          "source_url",
+                          "checked_at"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "slug",
+                  "name",
+                  "record_url",
+                  "facts_fetched_at",
+                  "caution"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "open": {
+                "type": "boolean"
+              },
+              "message": {
+                "type": "string"
+              },
+              "url": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "open",
+              "message",
+              "url"
+            ],
+            "additionalProperties": false
+          },
+          "fetched_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "as_of",
+          "cite",
+          "notes",
+          "request_id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "title": "Check a GitHub repository",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    }
+  ]
+}

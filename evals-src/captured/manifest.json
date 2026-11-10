@@ -1,0 +1,162 @@
+{
+  "captured_at": "2026-11-09T06:37:26.106Z",
+  "source_commit": "d33420c97be9223ffb13dfd1500a8a92c15f03c5",
+  "server": {
+    "name": "benchlytix",
+    "title": "BenchLytix",
+    "version": "1.3.0"
+  },
+  "via": "claude_plugin",
+  "tools_listed": [
+    "find_replacements",
+    "get_cost_scenarios",
+    "get_finding",
+    "get_agent_score",
+    "get_leaderboard",
+    "compare_agents",
+    "verify_agent",
+    "get_categories",
+    "get_methodology"
+  ],
+  "not_listed": [
+    "check_repo"
+  ],
+  "untagged_links": [
+    {
+      "key": "finding-001",
+      "path": "payload.finding.url"
+    },
+    {
+      "key": "finding-001",
+      "path": "payload.cite.url"
+    }
+  ],
+  "calls": [
+    {
+      "key": "fr-zapier",
+      "tool": "find_replacements",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "fr-zapier-keep-sheets",
+      "tool": "find_replacements",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "fr-notion",
+      "tool": "find_replacements",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "fr-slack",
+      "tool": "find_replacements",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "fr-airtable-keep-slack",
+      "tool": "find_replacements",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "fr-linear",
+      "tool": "find_replacements",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "fr-langfuse",
+      "tool": "find_replacements",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "fr-hubspot",
+      "tool": "find_replacements",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "fr-goal-secrets",
+      "tool": "find_replacements",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "fr-no-match",
+      "tool": "find_replacements",
+      "status": "no_match",
+      "is_error": false
+    },
+    {
+      "key": "fr-invalid",
+      "tool": "find_replacements",
+      "status": "error",
+      "is_error": true
+    },
+    {
+      "key": "cost-zapier-10",
+      "tool": "get_cost_scenarios",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "cost-notion-12",
+      "tool": "get_cost_scenarios",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "cost-slack-40",
+      "tool": "get_cost_scenarios",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "cost-linear-30",
+      "tool": "get_cost_scenarios",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "cost-airtable-20",
+      "tool": "get_cost_scenarios",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "cost-notion-slack-25",
+      "tool": "get_cost_scenarios",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "cost-copilot-40",
+      "tool": "get_cost_scenarios",
+      "status": "no_match",
+      "is_error": false
+    },
+    {
+      "key": "cost-hubspot-10",
+      "tool": "get_cost_scenarios",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "finding-001",
+      "tool": "get_finding",
+      "status": "ok",
+      "is_error": false
+    },
+    {
+      "key": "finding-unknown",
+      "tool": "get_finding",
+      "status": "error",
+      "is_error": true
+    }
+  ]
+}

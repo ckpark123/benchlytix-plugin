@@ -1,0 +1,61 @@
+{
+  "tool": "get_cost_scenarios",
+  "args": {
+    "paid_tools": [
+      "hubspot"
+    ],
+    "seats": 10
+  },
+  "is_error": false,
+  "body": {
+    "schema_version": "1.3.0",
+    "status": "ok",
+    "as_of": "2026-10-20",
+    "cite": {
+      "text": "BenchLytix cost calculator",
+      "url": "https://www.benchlytix.com/replace/cost"
+    },
+    "notes": [
+      "These are example bills at list price, not quotes.",
+      "Totals are grouped by currency and never converted.",
+      "Hosting a self-hosted option is not in these figures."
+    ],
+    "rows": [
+      {
+        "slug": "hubspot",
+        "name": "HubSpot",
+        "seats": 10,
+        "plan": "Sales Hub Starter",
+        "read_on": "2026-10-20",
+        "source_url": "https://www.hubspot.com/pricing/sales?tier=starter",
+        "overdue": false,
+        "cadence_header": "Billed annually",
+        "vendor_note": {
+          "untrusted_excerpt": "The pricing page shows \"Starts at $7/mo/seat\" with $20/mo/seat struck through, the same under both billing options, and does not state the terms of the reduction. Includes 500 credits."
+        },
+        "included_usage": null,
+        "kind": "unpriced",
+        "reason": "reduction_terms_not_stated",
+        "sentence": "HubSpot Sales Hub Starter shows $7 a seat, reduced from $20; terms not stated. Left out of the total."
+      }
+    ],
+    "totals": [],
+    "total_lines": [],
+    "based_on": [
+      "10 seats for each tool; annual billing where offered, shown per month (billed annually); list prices read 2026-10-20",
+      "Not included: discounts, taxes, add-ons, migration labour, hosting and switching risk"
+    ],
+    "no_figure_line": "1 of 1 tool has no figure (HubSpot); its row says why.",
+    "left_out": [
+      "discounts the vendor may give",
+      "taxes",
+      "add-ons and usage charged on top",
+      "the labour of moving your data and people",
+      "hosting, if you run a self-hosted option instead",
+      "the risk and time of switching"
+    ],
+    "unlisted": [],
+    "calculator_url": "https://www.benchlytix.com/replace/cost?tools=hubspot&seats=10&cadence=annual&utm_source=claude_plugin&utm_medium=assistant&utm_content=benchlytix-eval",
+    "request_id": "capture-cost-hubspot-10"
+  }
+}

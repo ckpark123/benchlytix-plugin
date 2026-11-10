@@ -1,0 +1,32 @@
+name: Wrong fact
+description: A fact in a BenchLytix answer or page does not match its source.
+labels: [wrong-fact]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Page or tool
+      description: The BenchLytix page URL, or the tool name and what you asked it.
+    validations:
+      required: true
+  - type: textarea
+    id: fact
+    attributes:
+      label: The fact
+      description: What BenchLytix says, quoted.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source URL
+      description: Where the correct fact is published.
+    validations:
+      required: true
+  - type: input
+    id: read-on
+    attributes:
+      label: Date you read the source
+      description: YYYY-MM-DD.
+    validations:
+      required: true

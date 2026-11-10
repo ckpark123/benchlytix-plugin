@@ -1,0 +1,1 @@
+{"schema_version":"1.3.0","status":"no_match","as_of":null,"cite":{"text":"BenchLytix cost calculator","url":"https://www.benchlytix.com/replace/cost"},"notes":["None of those is a paid tool BenchLytix prices. Try did_you_mean."],"rows":[],"unlisted":[{"did_you_mean":null}],"calculator_url":null,"request_id":"capture-cost-copilot-40"}

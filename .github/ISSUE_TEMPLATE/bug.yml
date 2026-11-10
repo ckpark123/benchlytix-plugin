@@ -1,0 +1,25 @@
+name: Bug
+description: The plugin or the server did not work as documented.
+labels: [bug]
+body:
+  - type: input
+    id: client
+    attributes:
+      label: Client and version
+      description: For example Claude Code 2.1.299 or Codex 0.152.1.
+    validations:
+      required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      description: The version in .claude-plugin/plugin.json.
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you asked, what came back, and what you expected. Include the request_id from the answer if there is one.
+    validations:
+      required: true

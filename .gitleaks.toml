@@ -1,0 +1,12 @@
+# Picked up automatically when gitleaks scans this folder (and the mirror, which carries it).
+title = "benchlytix-plugin"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Capture case keys in evals-src/captured/manifest.json (for example cost-zapier-10) look like generic API keys; they are names, not secrets (reviewed 2026-11-10)."
+condition = "AND"
+paths = ['''evals-src/captured/manifest\.json$''']
+regexTarget = "line"
+regexes = ['''"key": "(cost|fr|cr|finding)-[a-z0-9-]+"''']

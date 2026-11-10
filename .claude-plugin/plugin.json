@@ -1,0 +1,18 @@
+{
+  "name": "benchlytix",
+  "displayName": "BenchLytix",
+  "version": "1.0.0",
+  "description": "Dated, sourced answers from BenchLytix's published data: self-hosted replacements for paid SaaS tools with list-price examples, what AI support vendors charge per resolution, and public facts about GitHub-hosted MCP servers. No account needed.",
+  "author": {
+    "name": "BenchLytix",
+    "url": "https://www.benchlytix.com"
+  },
+  "homepage": "https://www.benchlytix.com/docs/mcp",
+  "repository": "https://github.com/ckpark123/benchlytix-plugin",
+  "license": "MIT",
+  "keywords": ["benchlytix", "self-hosted", "open-source", "saas-alternatives", "pricing", "mcp", "github"],
+  "documentationUrl": "https://www.benchlytix.com/docs/mcp",
+  "supportUrl": "https://github.com/ckpark123/benchlytix-plugin/issues",
+  "privacyPolicyUrl": "https://www.benchlytix.com/privacy#hosted-mcp",
+  "termsOfServiceUrl": "https://www.benchlytix.com/terms"
+}

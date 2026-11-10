@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "benchlytix": {
+      "type": "http",
+      "url": "https://www.benchlytix.com/api/mcp?via=claude_plugin"
+    }
+  }
+}
