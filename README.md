@@ -21,8 +21,9 @@ with its source and the date it was read. Server documentation: https://www.benc
   commits, contributors, commit concentration, README maintenance sentences, and BenchLytix's assessment if it
   lists the repository. First prompt: "Check n8n-io/n8n before I add it."
 
-Every answer keeps each fact's date and source, prints the links the server returned, and ends with the source
-and its date. The skills publish facts, not advice: they do not pick an option, sum costs, or judge security.
+Each skill tells the assistant to keep every fact's date and source, print the links the server returned, and end
+with the source and its date. The skills are written to give facts, not advice: they tell the assistant not to pick
+an option, sum costs, or judge security. Assistants can still slip; report a wrong fact (below).
 
 ## Install (Claude Code)
 
@@ -40,8 +41,8 @@ Tools only, without the plugin:
 claude mcp add --transport http benchlytix https://www.benchlytix.com/api/mcp
 ```
 
-If you added the npm server (`benchlytix-mcp-server`) before, remove it first. With both the directory connector and
-this plugin installed, every tool appears twice: keep one.
+If you added the npm server (`benchlytix-mcp-server`) before, remove it first. If the BenchLytix server is also added
+another way (by hand, or as a custom connector in your client), every tool appears twice: keep one.
 
 Other clients (claude.ai, Cowork, Codex, ChatGPT): see https://www.benchlytix.com/docs/mcp
 
