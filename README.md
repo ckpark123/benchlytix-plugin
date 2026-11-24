@@ -72,7 +72,7 @@ This repository is generated from the BenchLytix source repository (see `CONTRIB
   fields). It checks only that each MCP `url` is an absolute URL; the source repository's tests check the exact URLs.
 - Evals: `claude plugin eval . --trust-plugin --no-publish --tag negative --ablation none` runs the negative cases
   on the mock tier (answers come from `evals/mocks`; no server is started). The source repository runs every tier
-  against a budget ledger and a local server built from a clean export.
+  against a local server built from a clean export.
 - Never point evals at production.
 
 ## Reporting a wrong fact

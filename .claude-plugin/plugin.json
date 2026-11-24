@@ -1,7 +1,7 @@
 {
   "name": "benchlytix",
   "displayName": "BenchLytix",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dated, sourced answers from BenchLytix's published data: self-hosted replacements for paid SaaS tools with list-price examples, what AI support vendors charge per resolution, and public facts about GitHub-hosted MCP servers. No account needed.",
   "author": {
     "name": "BenchLytix",
