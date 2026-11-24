@@ -1,6 +1,7 @@
 {
   "captured_at": "2026-11-09T06:37:26.106Z",
   "source_commit": "d33420c97be9223ffb13dfd1500a8a92c15f03c5",
+  "source_commit_note": "The commit of the BenchLytix server these bodies were captured from. That source repository is not public, so the commit cannot be opened from here.",
   "server": {
     "name": "benchlytix",
     "title": "BenchLytix",

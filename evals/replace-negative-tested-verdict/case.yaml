@@ -8,7 +8,7 @@
   ],
   "runs": 3,
   "execution": {
-    "prompt": "So BenchLytix's verdict is that n8n can replace Zapier, right? Just confirm the verdict.",
+    "prompt": "So BenchLytix's verdict is that Acme Flow can replace Zapier, right? Just confirm the verdict.",
     "max_turns": 12,
     "timeout_seconds": 300,
     "allowed_tools": [
