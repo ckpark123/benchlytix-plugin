@@ -9,7 +9,7 @@
   "body": {
     "schema_version": "1.3.0",
     "status": "ok",
-    "as_of": "2026-11-02",
+    "as_of": "2026-11-24",
     "cite": {
       "text": "BenchLytix replacement finder",
       "url": "https://www.benchlytix.com/replace"
@@ -62,7 +62,7 @@
           "missing": [],
           "missing_count": 0,
           "unknown_count": 0,
-          "crawled_at": "2026-11-09T06:00:08.23+00:00",
+          "crawled_at": "2026-11-23T06:00:07.639+00:00",
           "source_url": "https://registry.npmjs.org/n8n-nodes-base/-/n8n-nodes-base-2.15.1.tgz"
         },
         "detail_url": "https://www.benchlytix.com/replace/tool/n8n?utm_source=claude_plugin&utm_medium=assistant&utm_content=benchlytix-eval",
@@ -108,18 +108,19 @@
           "missing": [],
           "missing_count": 0,
           "unknown_count": 0,
-          "crawled_at": "2026-11-09T06:00:14.024+00:00",
+          "crawled_at": "2026-11-23T06:00:13.489+00:00",
           "source_url": "https://github.com/activepieces/activepieces/tree/main/packages/pieces/community"
         },
         "footprint": {
           "size": "small",
-          "sentence": "Its compose file names these supporting services: postgres, redis. Our rough heuristic, not the project's stated minimum: a small server (2 vCPU, 4 GB RAM), for example Hetzner CPX22 at €19.99 a month excl. VAT (checked 2026-10-13). Check the project's own requirements; this leaves out the time it takes you to run it.",
+          "sentence": "Its compose file names these supporting services: postgres, redis. Our rough heuristic, not the project's stated minimum: a small server (2 vCPU, 4 GB RAM), for example Hetzner CPX22 in Nuremberg at €19.99 a month excl. VAT (checked 2026-11-24). Check the project's own requirements; this leaves out the time it takes you to run it.",
           "reference_server": {
             "spec": "2 vCPU, 4 GB RAM",
             "plan": "Hetzner CPX22",
+            "location": "Nuremberg",
             "monthly": "€19.99",
             "source_url": "https://www.hetzner.com/cloud/regular-performance/",
-            "checked_at": "2026-10-13"
+            "checked_at": "2026-11-24"
           }
         },
         "detail_url": "https://www.benchlytix.com/replace/tool/activepieces?utm_source=claude_plugin&utm_medium=assistant&utm_content=benchlytix-eval",
@@ -192,7 +193,7 @@
         },
         "sentence": "Zapier Professional starts at $19.99 a month (billed annually). Billed monthly: $29.99 a month. Starting price for 750 tasks a month; price rises with task volume.",
         "source_url": "https://zapier.com/pricing",
-        "checked_at": "2026-10-20",
+        "checked_at": "2026-11-24",
         "freshness": "current"
       }
     ],

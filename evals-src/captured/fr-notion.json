@@ -9,7 +9,7 @@
   "body": {
     "schema_version": "1.3.0",
     "status": "ok",
-    "as_of": "2026-11-02",
+    "as_of": "2026-11-24",
     "cite": {
       "text": "BenchLytix replacement finder",
       "url": "https://www.benchlytix.com/replace"
@@ -127,13 +127,14 @@
         },
         "footprint": {
           "size": "small",
-          "sentence": "Its compose file names these supporting services: postgres, redis. Our rough heuristic, not the project's stated minimum: a small server (2 vCPU, 4 GB RAM), for example Hetzner CPX22 at €19.99 a month excl. VAT (checked 2026-10-13). Check the project's own requirements; this leaves out the time it takes you to run it.",
+          "sentence": "Its compose file names these supporting services: postgres, redis. Our rough heuristic, not the project's stated minimum: a small server (2 vCPU, 4 GB RAM), for example Hetzner CPX22 in Nuremberg at €19.99 a month excl. VAT (checked 2026-11-24). Check the project's own requirements; this leaves out the time it takes you to run it.",
           "reference_server": {
             "spec": "2 vCPU, 4 GB RAM",
             "plan": "Hetzner CPX22",
+            "location": "Nuremberg",
             "monthly": "€19.99",
             "source_url": "https://www.hetzner.com/cloud/regular-performance/",
-            "checked_at": "2026-10-13"
+            "checked_at": "2026-11-24"
           }
         },
         "detail_url": "https://www.benchlytix.com/replace/tool/docmost?utm_source=claude_plugin&utm_medium=assistant&utm_content=benchlytix-eval",
@@ -167,7 +168,7 @@
         "limit_note": null,
         "sentence": "Notion Plus starts at $10 a month per seat (billed annually). Billed monthly: $12 a month per seat.",
         "source_url": "https://www.notion.com/pricing",
-        "checked_at": "2026-10-20",
+        "checked_at": "2026-11-24",
         "freshness": "current"
       }
     ],

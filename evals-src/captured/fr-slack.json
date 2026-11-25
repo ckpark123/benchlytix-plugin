@@ -9,7 +9,7 @@
   "body": {
     "schema_version": "1.3.0",
     "status": "ok",
-    "as_of": "2026-11-02",
+    "as_of": "2026-11-24",
     "cite": {
       "text": "BenchLytix replacement finder",
       "url": "https://www.benchlytix.com/replace"
@@ -153,12 +153,12 @@
         "unit": "per seat",
         "billing": "billed annually",
         "vendor_note": {
-          "untrusted_excerpt": "Slack bills only active members (its fair billing policy)."
+          "untrusted_excerpt": "Slack bills only active members (its fair billing policy). The monthly price carries a promotion for new teams, \"50% off for 3 months\"; the amount shown is the standard price."
         },
         "limit_note": null,
-        "sentence": "Slack Pro starts at $7.25 a month per seat (billed annually). Billed monthly: $8.75 a month per seat. Slack bills only active members (its fair billing policy).",
+        "sentence": "Slack Pro starts at $7.25 a month per seat (billed annually). Billed monthly: $8.75 a month per seat. Slack bills only active members (its fair billing policy). The monthly price carries a promotion for new teams, \"50% off for 3 months\"; the amount shown is the standard price.",
         "source_url": "https://slack.com/pricing",
-        "checked_at": "2026-10-20",
+        "checked_at": "2026-11-24",
         "freshness": "current"
       }
     ],

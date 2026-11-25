@@ -10,7 +10,7 @@
   "body": {
     "schema_version": "1.3.0",
     "status": "ok",
-    "as_of": "2026-10-20",
+    "as_of": "2026-11-24",
     "cite": {
       "text": "BenchLytix cost calculator",
       "url": "https://www.benchlytix.com/replace/cost"
@@ -26,7 +26,7 @@
         "name": "Zapier",
         "seats": 10,
         "plan": "Professional",
-        "read_on": "2026-10-20",
+        "read_on": "2026-11-24",
         "source_url": "https://zapier.com/pricing",
         "overdue": false,
         "cadence_header": "Billed annually",
@@ -47,7 +47,7 @@
         "billing": "billed annually",
         "assumptions": [
           "$19.99 a month for the plan, its starting price, counted once, billed annually",
-          "list price on the vendor's page, read 2026-10-20"
+          "list price on the vendor's page, read 2026-11-24"
         ],
         "limit_note": {
           "untrusted_excerpt": "This plan includes 1 user; a team of 10 needs a plan we have not priced."
@@ -69,7 +69,7 @@
       "Example: at least $19.99 a month, from 1 of 1 tool"
     ],
     "based_on": [
-      "10 seats for each tool; annual billing where offered, shown per month (billed annually); list prices read 2026-10-20",
+      "10 seats for each tool; annual billing where offered, shown per month (billed annually); list prices read 2026-11-24",
       "Zapier counted once at the plan's starting price",
       "Not included: discounts, taxes, add-ons, migration labour, hosting and switching risk"
     ],

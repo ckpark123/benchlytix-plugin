@@ -10,7 +10,7 @@
   "body": {
     "schema_version": "1.3.0",
     "status": "ok",
-    "as_of": "2026-10-20",
+    "as_of": "2026-11-24",
     "cite": {
       "text": "BenchLytix cost calculator",
       "url": "https://www.benchlytix.com/replace/cost"
@@ -26,7 +26,7 @@
         "name": "Airtable",
         "seats": 20,
         "plan": "Team",
-        "read_on": "2026-10-20",
+        "read_on": "2026-11-24",
         "source_url": "https://www.airtable.com/pricing",
         "overdue": false,
         "cadence_header": "Billed annually",
@@ -45,7 +45,7 @@
         "billing": "billed annually",
         "assumptions": [
           "20 seats × $20 a seat a month, billed annually",
-          "list price on the vendor's page, read 2026-10-20",
+          "list price on the vendor's page, read 2026-11-24",
           "every seat edits (Airtable charges editors only; read-only collaborators are free)"
         ],
         "limit_note": null
@@ -68,7 +68,7 @@
       "Example: up to $400 a month, from 1 tool: Airtable if every seat edits"
     ],
     "based_on": [
-      "20 seats for each tool; annual billing where offered, shown per month (billed annually); list prices read 2026-10-20",
+      "20 seats for each tool; annual billing where offered, shown per month (billed annually); list prices read 2026-11-24",
       "Not included: discounts, taxes, add-ons, migration labour, hosting and switching risk"
     ],
     "no_figure_line": null,

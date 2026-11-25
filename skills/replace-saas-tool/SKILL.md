@@ -114,8 +114,10 @@ call again with cursor" note, which is for tools:
   `coverage` is present: "keeps `coverage.matched_count` of the integrations you named", then the ones it does not
   keep (`coverage.missing`), app list read on `coverage.crawled_at`, `coverage.source_url`. With no named apps, say
   nothing about coverage.
-- Hosting, when `footprint.reference_server` is present: "reference server <`footprint.reference_server.plan`>
-  <`footprint.reference_server.monthly`> a month, reference, not a total", with `footprint.sentence`.
+- Hosting, when `footprint.reference_server` is present: "reference server <`footprint.reference_server.plan`> in
+  <`footprint.reference_server.location`>, <`footprint.reference_server.monthly`> a month, reference, not a total",
+  with `footprint.sentence`. The price is for that location; other locations of the same provider cost more or less.
+  When `footprint.reference_server.location` is absent, leave "in ..." out; never print "null" or "undefined".
 - Tested options: "Tested: run result <`verdict`>, run <`tested_run.finished_at`>" (the date part of it) and
   `scorecard_url`. When `tested_run.finished_at` is null, leave the date out and say the run date is not published;
   never print "null".

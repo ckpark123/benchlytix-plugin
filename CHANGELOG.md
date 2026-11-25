@@ -3,6 +3,12 @@
 One entry per version. The version here equals `version` in `.claude-plugin/plugin.json` and
 `.codex-plugin/plugin.json`. Minor for a skill or a behaviour, patch for wording.
 
+## 1.0.2 (2026-11-24)
+
+- `replace-saas-tool`: the hosting line names where the reference price is read, "reference server Hetzner CPX22 in
+  Nuremberg, €19.99 a month" (from `footprint.reference_server.location`, added on the server 2026-11-24, schema
+  still 1.3.0). With no location in the result it leaves "in ..." out. Wording only; no tool, eval or server change.
+
 ## 1.0.1 (2026-11-23)
 
 - README only: the evals line no longer mentions a budget ledger. No skill, eval or server change.
